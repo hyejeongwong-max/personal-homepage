@@ -7,3 +7,5 @@
 - 内容为低保真线框预览：Hero / 产品 / 技能 / 文章 / 关于我 / 联系（6 平台）
 - 产品与文章均为占位，待替换真实项目与内容
 - 交付：GitHub 仓库 + 公域浏览链接
+  - 仓库：https://github.com/hyejeongwong-max/personal-homepage
+  - 浏览：https://lcnf1nf2xo4j.doubao.link/app/app_17gceh40g9k

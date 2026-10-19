@@ -26,5 +26,5 @@
 
 ## 公域链接
 
-- 产品浏览：待发布后填写
+- 产品浏览：https://lcnf1nf2xo4j.doubao.link/app/app_17gceh40g9k
 - 代码仓库：https://github.com/hyejeongwong-max/personal-homepage
