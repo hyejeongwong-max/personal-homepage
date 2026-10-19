@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hyejeong 个人主页 · V0.1.0（低保真预览）</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23D1D5DB'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' font-family='monospace' fill='%23374151'%3EH%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#374151; --ink2:#6B7280; --line:#9CA3AF; --line2:#D1D5DB;
+    --bg:#F3F4F6; --card:#FFFFFF; --mark:#2563EB; --markbg:#EFF6FF;
+    --num:#B0B7C3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+
+  .tag{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.08em;color:var(--mark);background:var(--markbg);border:1px solid #BFDBFE;padding:2px 8px;border-radius:3px;margin-bottom:12px;}
+
+  /* ===== 导航：左侧 logo + 右侧菜单，参考 oiloil 顶部锚点导航 ===== */
+  .nav{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line2);}
+  .nav-in{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .logo{font-weight:800;font-size:20px;letter-spacing:.01em;}
+  .logo small{font-weight:400;color:var(--ink2);font-size:13px;}
+  .menu{display:flex;gap:18px;flex-wrap:wrap;}
+  .menu a{color:var(--ink);text-decoration:none;font-size:14px;}
+  .menu a:hover{color:var(--mark);text-decoration:underline;}
+  .menu .gh{color:var(--ink2);}
+
+  main{max-width:1040px;margin:0 auto;padding:0 24px 60px;}
+
+  /* ===== 通用区块：编号大标题（参考 #01 产品 / #02 联系） ===== */
+  section{padding:64px 0 40px;border-bottom:1px solid var(--line2);}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px;}
+  .sec-head .big-num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:30px;font-weight:700;color:var(--num);}
+  .sec-head h2{font-size:34px;font-weight:800;letter-spacing:.02em;}
+
+  /* ===== Hero：大标题 + 定位 + 一句话（参考 oiloil makes things.） ===== */
+  .hero{text-align:left;padding:88px 0 72px;border-bottom:1px solid var(--line2);}
+  .hero .tag{display:inline-block;margin-bottom:18px;}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:.01em;line-height:1.15;margin-bottom:16px;}
+  .hero h1 .reg{color:var(--num);}
+  .hero .role{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;letter-spacing:.12em;color:var(--ink2);margin-bottom:22px;}
+  .hero p.desc{max-width:600px;font-size:16px;color:var(--ink);}
+  .hero .ava{display:flex;align-items:center;justify-content:center;border:2px dashed var(--line2);background:var(--bg);color:var(--ink2);font-size:13px;min-height:120px;border-radius:6px;max-width:600px;margin-top:28px;}
+
+  /* ===== 产品条目：编号 + 名称 + 一句话 + CTA + 截图占位，大留白分隔（参考 oiloil 产品区） ===== */
+  .proj{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:44px 0;}
+  .proj + .proj{border-top:1px dashed var(--line2);}
+  .proj .pnum{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:22px;font-weight:700;color:var(--num);padding-top:6px;}
+  .proj .pbody h3{font-size:26px;font-weight:800;margin-bottom:8px;}
+  .proj .pbody p{font-size:15px;color:var(--ink);max-width:640px;margin-bottom:16px;}
+  .proj .cta{display:inline-block;font-size:14px;color:var(--mark);text-decoration:none;border-bottom:1px solid var(--mark);padding-bottom:2px;margin-right:18px;}
+  .proj .shot{display:flex;align-items:center;justify-content:center;border:2px dashed var(--line2);background:repeating-linear-gradient(135deg,#E5E7EB 0 8px,#F3F4F6 8px 16px);color:var(--ink2);font-size:13px;min-height:130px;border-radius:6px;margin-top:22px;max-width:640px;}
+
+  /* ===== 技能：分类分组，每项 名称 + 一句话 + ↗（参考 oiloil Skills 分组） ===== */
+  .skill-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(max-width:640px){.skill-groups{grid-template-columns:1fr;}}
+  .sg{border:1px solid var(--line2);border-radius:8px;padding:20px 22px;background:var(--bg);}
+  .sg .shead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;}
+  .sg .shead h3{font-size:16px;font-weight:700;}
+  .sg .shead .cnt{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--num);}
+  .sg ul{list-style:none;}
+  .sg li{padding:9px 0;border-top:1px dashed var(--line2);font-size:14px;}
+  .sg li .nm{font-weight:600;}
+  .sg li .ds{color:var(--ink2);font-size:13px;margin-left:8px;}
+  .sg li .ex{color:var(--num);margin-left:6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+
+  /* ===== 文章：日期 + 标题 + 摘要列表（参考 oiloil 文章区） ===== */
+  .arts{display:flex;flex-direction:column;}
+  .art{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:22px 0;border-top:1px dashed var(--line2);}
+  @media(max-width:560px){.art{grid-template-columns:1fr;gap:4px;}}
+  .art .date{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--ink2);padding-top:4px;}
+  .art h3{font-size:19px;font-weight:700;margin-bottom:6px;}
+  .art p{font-size:14px;color:var(--ink2);max-width:680px;}
+  .arts .more{margin-top:22px;text-align:right;font-size:14px;color:var(--mark);text-decoration:none;border-bottom:1px solid var(--mark);display:inline-block;padding-bottom:2px;align-self:flex-end;}
+
+  /* ===== 关于我：名字 + 标签 + 经历编号条目（参考 oiloil 关于区） ===== */
+  .about-head{margin-bottom:28px;}
+  .about-head h2{font-size:34px;font-weight:800;margin-bottom:10px;}
+  .about-head .bio{font-size:15px;color:var(--ink);max-width:600px;margin-bottom:16px;}
+  .about-head .tags{display:flex;gap:8px;flex-wrap:wrap;}
+  .about-head .tags span{font-size:12px;border:1px solid var(--line2);border-radius:20px;padding:3px 14px;color:var(--ink);background:var(--bg);}
+  .exp{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:26px 0;}
+  .exp + .exp{border-top:1px dashed var(--line2);}
+  .exp .enum{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:20px;font-weight:700;color:var(--num);padding-top:4px;}
+  .exp .eb h3{font-size:20px;font-weight:800;margin-bottom:4px;}
+  .exp .eb .co{font-size:13px;color:var(--mark);margin-bottom:6px;}
+  .exp .eb p{font-size:14px;color:var(--ink);max-width:640px;}
+
+  /* ===== 联系：编号列表 + 大标题（参考 #02 联系 / Elsewhere） ===== */
+  .contact .sec-head{margin-bottom:8px;}
+  .contact .csub{color:var(--ink2);font-size:14px;margin-bottom:30px;}
+  .clist{display:grid;grid-template-columns:1fr;gap:2px;}
+  @media(min-width:720px){.clist{grid-template-columns:1fr 1fr;column-gap:60px;}}
+  .citem{display:flex;align-items:baseline;gap:16px;padding:16px 0;border-top:1px dashed var(--line2);}
+  .citem .cnum{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16px;color:var(--num);min-width:26px;}
+  .citem .cnm{font-size:16px;font-weight:700;min-width:86px;}
+  .citem .cval{font-size:14px;color:var(--ink2);}
+  .citem .carr{margin-left:auto;color:var(--num);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+
+  footer{border-top:1px solid var(--line2);margin-top:0;padding:28px 0 40px;text-align:center;color:var(--ink2);font-size:13px;}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<header class="nav">
+  <div class="nav-in">
+    <div class="logo">hyejeong<small> · makes things</small></div>
+    <nav class="menu">
+      <a href="#hero">首页</a>
+      <a href="#projects">产品</a>
+      <a href="#skills">技能</a>
+      <a href="#articles">文章</a>
+      <a href="#about">关于我</a>
+      <a href="#contact">联系</a>
+      <a class="gh" href="#hero">github ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== Hero：大标题 + 定位 + 一句话 ===== -->
+  <section id="hero" class="hero">
+    <span class="tag">HERO · 首屏</span>
+    <h1>hyejeong<br><span class="reg">makes things.</span></h1>
+    <div class="role">AI PRODUCT MANAGER / INTERACTION DESIGNER / DEVELOPER</div>
+    <p class="desc">7 年设计 × 产品 × AI 复合经验，懂用户、懂产品、懂技术。前 5 年国内头部资讯媒体集团（交互设计 3 年 + 产品经理 2 年），后 2 年 AI 教育公司 AI 产品经理。</p>
+    <div class="ava">头像 / 主视觉占位（待提供真实照片）</div>
+  </section>
+
+  <!-- ===== ① 产品 ===== -->
+  <section id="projects">
+    <div class="sec-head"><span class="big-num">#01</span><h2>产品</h2></div>
+
+    <div class="proj">
+      <div class="pnum">01</div>
+      <div class="pbody">
+        <h3>AI 教育产品 0→1（占位）</h3>
+        <p>一句话简介占位：说明项目解决的问题、我的角色与核心成果。</p>
+        <a class="cta" href="#projects">查看详情 →</a>
+        <div class="shot">产品截图占位 1</div>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="pnum">02</div>
+      <div class="pbody">
+        <h3>资讯产品体验改版（占位）</h3>
+        <p>一句话简介占位：说明项目解决的问题、我的角色与核心成果。</p>
+        <a class="cta" href="#projects">查看详情 →</a>
+        <div class="shot">产品截图占位 2</div>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="pnum">03</div>
+      <div class="pbody">
+        <h3>AI Agent 工具（占位）</h3>
+        <p>一句话简介占位：说明项目解决的问题、我的角色与核心成果。</p>
+        <a class="cta" href="#projects">在线演示 →</a>
+        <a class="cta" href="#projects">GitHub →</a>
+        <div class="shot">产品截图占位 3</div>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="pnum">04</div>
+      <div class="pbody">
+        <h3>Prompt 工程实践（占位）</h3>
+        <p>一句话简介占位：说明项目解决的问题、我的角色与核心成果。</p>
+        <a class="cta" href="#projects">阅读文章 →</a>
+        <div class="shot">产品截图占位 4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 技能 ===== -->
+  <section id="skills">
+    <div class="sec-head"><h2>技能</h2></div>
+    <div class="skill-groups">
+      <div class="sg">
+        <div class="shead"><h3>交互设计</h3><span class="cnt">4</span></div>
+        <ul>
+          <li><span class="nm">原型设计</span><span class="ds">低保真 → 高保真全流程</span><span class="ex">↗</span></li>
+          <li><span class="nm">可用性测试</span><span class="ds">测试方案与执行</span><span class="ex">↗</span></li>
+          <li><span class="nm">设计系统</span><span class="ds">组件规范与落地</span><span class="ex">↗</span></li>
+          <li><span class="nm">信息架构</span><span class="ds">导航与内容组织</span><span class="ex">↗</span></li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="shead"><h3>产品能力</h3><span class="cnt">4</span></div>
+        <ul>
+          <li><span class="nm">需求分析</span><span class="ds">需求澄清与优先级</span><span class="ex">↗</span></li>
+          <li><span class="nm">PRD</span><span class="ds">需求文档撰写</span><span class="ex">↗</span></li>
+          <li><span class="nm">用户研究</span><span class="ds">访谈与问卷</span><span class="ex">↗</span></li>
+          <li><span class="nm">数据分析</span><span class="ds">指标与漏斗分析</span><span class="ex">↗</span></li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="shead"><h3>AI / 算法</h3><span class="cnt">4</span></div>
+        <ul>
+          <li><span class="nm">Prompt 工程</span><span class="ds">提示词设计与调优</span><span class="ex">↗</span></li>
+          <li><span class="nm">模型评测</span><span class="ds">评测集与效果基准</span><span class="ex">↗</span></li>
+          <li><span class="nm">RAG</span><span class="ds">检索增强应用</span><span class="ex">↗</span></li>
+          <li><span class="nm">Agent</span><span class="ds">智能体流程设计</span><span class="ex">↗</span></li>
+        </ul>
+      </div>
+      <div class="sg">
+        <div class="shead"><h3>开发技术</h3><span class="cnt">4</span></div>
+        <ul>
+          <li><span class="nm">前端</span><span class="ds">HTML / CSS / JS</span><span class="ex">↗</span></li>
+          <li><span class="nm">后端</span><span class="ds">接口与服务端逻辑</span><span class="ex">↗</span></li>
+          <li><span class="nm">数据库</span><span class="ds">建模与查询</span><span class="ex">↗</span></li>
+          <li><span class="nm">部署</span><span class="ds">上线与监控</span><span class="ex">↗</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 文章 ===== -->
+  <section id="articles">
+    <div class="sec-head"><h2>文章</h2></div>
+    <div class="arts">
+      <div class="art">
+        <span class="date">2026-XX-XX</span>
+        <div>
+          <h3>AI 产品需求澄清清单（占位）</h3>
+          <p>摘要占位：把"模型能不能做到、数据支不支持、效果怎么算、错了怎么办"在动手前逼出来。</p>
+        </div>
+      </div>
+      <div class="art">
+        <span class="date">2026-XX-XX</span>
+        <div>
+          <h3>从交互设计到 AI 产品经理（占位）</h3>
+          <p>摘要占位：7 年职业路径复盘，设计思维如何迁移到 AI 产品。</p>
+        </div>
+      </div>
+      <div class="art">
+        <span class="date">2026-XX-XX</span>
+        <div>
+          <h3>AI 教育产品 0→1 复盘（占位）</h3>
+          <p>摘要占位：数据、评测、迭代与踩坑记录。</p>
+        </div>
+      </div>
+      <a class="more" href="#articles">全部文章 →</a>
+    </div>
+  </section>
+
+  <!-- ===== 关于我 ===== -->
+  <section id="about">
+    <div class="about-head">
+      <h2>关于我</h2>
+      <p class="bio">hyejeong，设计出身，转产品，再做 AI 产品——从界面到系统，从逻辑到模型。</p>
+      <div class="tags">
+        <span>7 年经验</span><span>交互设计</span><span>产品管理</span><span>AI 产品</span><span>资讯媒体</span><span>AI 教育</span>
+      </div>
+    </div>
+
+    <div class="exp">
+      <div class="enum">01</div>
+      <div class="eb">
+        <h3>交互设计师 · 3 年</h3>
+        <div class="co">国内头部资讯媒体集团</div>
+        <p>资讯产品体验设计：原型、可用性测试、设计系统。</p>
+      </div>
+    </div>
+    <div class="exp">
+      <div class="enum">02</div>
+      <div class="eb">
+        <h3>产品经理 · 2 年</h3>
+        <div class="co">国内头部资讯媒体集团</div>
+        <p>资讯产品规划与迭代：需求、数据分析、增长。</p>
+      </div>
+    </div>
+    <div class="exp">
+      <div class="enum">03</div>
+      <div class="eb">
+        <h3>AI 产品经理 · 2 年</h3>
+        <div class="co">AI 教育公司</div>
+        <p>AI 教育产品从 0 到 1：需求澄清、模型评测、Prompt 工程。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ② 联系（页面最底部） ===== -->
+  <section id="contact" class="contact">
+    <div class="sec-head"><span class="big-num">#02</span><h2>联系 / Elsewhere</h2></div>
+    <p class="csub">六个平台，按附图设计稿内容呈现。</p>
+    <div class="clist">
+      <div class="citem"><span class="cnum">01</span><span class="cnm">GitHub</span><span class="cval">@oil-oil</span><span class="carr">→</span></div>
+      <div class="citem"><span class="cnum">02</span><span class="cnm">X</span><span class="cval">@I_am_oil_oil</span><span class="carr">→</span></div>
+      <div class="citem"><span class="cnum">03</span><span class="cnm">Email</span><span class="cval">zhihuang.oiloil@gmail.com</span><span class="carr">→</span></div>
+      <div class="citem"><span class="cnum">04</span><span class="cnm">哔哩哔哩</span><span class="cval">Oil 的视频与 AI 实践</span><span class="carr">→</span></div>
+      <div class="citem"><span class="cnum">05</span><span class="cnm">小红书</span><span class="cval">Oil 的小红书主页</span><span class="carr">→</span></div>
+      <div class="citem"><span class="cnum">06</span><span class="cnm">抖音</span><span class="cval">Oil 的抖音主页</span><span class="carr">→</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 hyejeong · 个人主页 V0.1.0（低保真预览版） · 排版参考 oiloil.org
+</footer>
+
+</body>
+</html>
